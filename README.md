@@ -1,7 +1,5 @@
 # Revisiting Strategies for End-to-End LLM Plan Generation
 
-Not Finished Yet
-
 ![Cover Image](cover.png)
 
 This repository contains the codebase for the paper **Chasing Progress, Not Perfection: Revisiting Strategies for End-to-End LLM Plan Generation**
