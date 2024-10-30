@@ -17,60 +17,24 @@ This repository contains the codebase for the paper **Chasing Progress, Not Perf
 
 ```bash
 📂 .
-├── 📜 README.md
-├── 📂 conf
-│   ├── 📜 README.md
-│   ├── 📂 base
-│   │   ├── 📜 catalog.yml
-│   │   ├── 📜 globals.yml
-│   │   ├── 📜 parameters.yml
-│   │   ├── 📜 parameters_further_ppo_training.yml
-│   │   ├── 📜 parameters_language_model_planning_evaluation.yml
-│   │   ├── 📜 parameters_plan_validation_probing.yml
-│   │   ├── 📜 parameters_text_prompt_generation.yml
-│   │   └── 📜 parameters_training_llm_for_plan_generation.yml
-│   ├── 📂 local
-│   │   └── 📜 credentials.yml
-│   └── 📜 logging.yml
-├──  cover.png
+├── 📂 conf # configuration files, make sure you check and modify them before running the experiments
 ├── 📂 data
 │   ├── 📂 03_primary
-│   │   └── 📂 llm_plan_generation_dataset_qwen
+│   │   └── 📂 llm_plan_generation_dataset_qwen # store the training dataset (incomplete for this repo)
 │   └── 📜 READMD.md
 ├── 📂 opt
-│   ├── 📜 READMD.md
-│   ├── 📂 VAL
-│   └── 📂 planning-as-a-service
-├──  pyproject.toml
-├──  requirements.txt
+│   ├── 📂 VAL  # pddl validator 
+│   └── 📂 planning-as-a-service    # pddl planner service
 ├── 📂 src
 │   ├── 📂 better_language_model_for_plan_generation
-│   │   ├── 📜 __init__.py
-│   │   ├── 📜 __main__.py
-│   │   ├── 📂 __pycache__
-│   │   ├── 📜 pipeline_registry.py
 │   │   ├── 📂 pipelines
-│   │   ├── 📜 settings.py
-│   │   └── 📂 utils
-│   └── 📂 better_language_model_for_plan_generation.egg-info
-│       ├──  PKG-INFO
-│       ├──  SOURCES.txt
-│       ├──  dependency_links.txt
-│       ├──  entry_points.txt
-│       ├──  requires.txt
-│       └──  top_level.txt
-└── 📂 zjob-scripts
-    ├── 📜 README.md
-    ├── 📂 llama_fac_config
-    │   ├── 📂 data
-    │   └── 📂 deepspeed
-    ├── 📜 step_1_huggingface_dataset_creation.sh
-    ├── 📜 step_2_training_llm_for_plan_gen.sh
-    ├── 📜 step_3_llama_fac_lm_planning_evaluation.sh
-    ├── 📜 step_3_llama_fac_lm_planning_evaluation_clever_hans.sh
-    ├── 📜 step_3_llama_fac_lm_planning_evaluation_ppo.sh
-    ├── 📜 step_4_lm_planning_probing.sh
-    └── 📜 step_5_ppo_further_training.sh
+│   │   │   ├── 📂 further_ppo_training # further RL training for llm planner
+│   │   │   ├── 📂 language_model_planning_evaluation   # evaluation of the trained llm planner
+│   │   │   ├── 📂 plan_validation_probing  # probing test to check if model can identify mistakes correctly
+│   │   │   ├── 📂 text_prompt_generation   # generate training dataset
+│   │   │   └── 📂 training_llm_for_plan_generation # deprecated, we now use llama factory rather than hard coding the training process
+│   │   └── 📂 utils    # other useful methods such as calling the planner 
+└── 📂 zjob-scripts  # scripts for running the experiments
 ```
 
 > [!TIP]
@@ -86,4 +50,23 @@ pip install -e .
 ```
 
 ## How to Run
-To run the experiments, 
+To run the experiments, we recommend checking the `zjob-scripts` directory for the scripts to run the experiments. 
+
+Make sure the root directory is the project root directory. Do not run the scripts from the `zjob-scripts` directory.
+
+- Data Preparation: `zjob-scripts/step_1_huggingface_dataset_creation.sh`
+- Training LLM for Plan Generation: `zjob-scripts/step_2_training_llm_for_plan_gen.sh`
+- Evaluation of LLM for Plan Generation: `zjob-scripts/step_3_llama_fac_lm_planning_evaluation.sh`
+- Probing LLM for Mistake Recognition: `zjob-scripts/step_4_lm_planning_probing.sh`
+- RL Training for Plan Generation: `zjob-scripts/step_5_ppo_further_training.sh`
+
+> [!NOTE]
+> Most of our experiments are run with 4x A100 GPUs. Please adjust the batch size and gradient accumulation steps accordingly if you have different hardware.
+
+
+## Known Issues
+### Plan Generation Data is Not Ready
+Due to storage limitations, we are unable to provide the plan generation dataset. However, you can use the scripts to generate the dataset.
+Before generating the dataset by yourself, please make sure you setup the following stuffs:
+1. make sure the `planning-as-a-service` is running, you can run `src/better_language_model_for_plan_generation/utils/call_planning_as_service.py` to check if the service is running. Make sure `http://localhost:5001/package/lama-first/solve` is accessible.
+2. Make sure you have 100+ GB of free space in your disk. The data generation process will took 24+ hours to finish.

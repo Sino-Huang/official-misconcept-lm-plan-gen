@@ -20,6 +20,6 @@ text_prompt_generation_params:
   huggingface_chunk_size: 40
   seed: 1111
 
-  has_debug_huggingface_dataset: false
+  has_debug_huggingface_dataset: true
   has_create_huggingface_dataset: false 
   if_qwen: true
