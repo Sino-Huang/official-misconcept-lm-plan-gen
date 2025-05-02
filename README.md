@@ -6,7 +6,7 @@ This repository contains the codebase for the paper **Chasing Progress, Not Perf
 
 > **TL;DR** Our study challenges prevailing views on LLMs' planning abilities. While fine-tuning on planning data alone doesn't yield robust skills, strategies to enhance LLM reasoning indeed made progress towards better plan quality, evidenced by increase of executability rate.
 
-To view the full version of the paper, please check this [link](https://github.com/Sino-Huang/official-misconcept-lm-plan-gen/blob/master/full_revisiting_strategies_for_llm_plan.pdf).
+To view the **full version of the paper**, please check this [link](https://github.com/Sino-Huang/official-misconcept-lm-plan-gen/blob/master/full_revisiting_strategies_for_llm_plan.pdf).
 
 
 > [!IMPORTANT]
