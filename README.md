@@ -64,9 +64,12 @@ Make sure the root directory is the project root directory. Do not run the scrip
 > Most of our experiments are run with 4x A100 GPUs. Please adjust the batch size and gradient accumulation steps accordingly if you have different hardware.
 
 
-## Known Issues
-### Plan Generation Data is Not Ready
-Due to storage limitations, we are unable to provide the plan generation dataset. However, you can use the scripts to generate the dataset.
+## Data is in Huggingface Hub
+One can check https://huggingface.co/huangsukai for the Plan Generation LLM training dataset. 
+The training datasets are prefixed with "llm_plan_gen_dataset_". Please note that the dataset names differ from those mentioned in the paper—refer to the README file for the correct mappings.
+
+
+Alternatively, you can use the scripts to generate the dataset.
 Before generating the dataset by yourself, please make sure you setup the following stuffs:
 1. make sure the `planning-as-a-service` is running, you can run `src/better_language_model_for_plan_generation/utils/call_planning_as_service.py` to check if the service is running. Make sure `http://localhost:5001/package/lama-first/solve` is accessible.
 2. Make sure you have 100+ GB of free space in your disk. The data generation process will took 24+ hours to finish.
